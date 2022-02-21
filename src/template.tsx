@@ -5,20 +5,11 @@ import ReactPDF, {
   View,
   Document,
   StyleSheet,
+  Image,
 } from "@react-pdf/renderer";
 
-type TemplateData = {
-  companyName: string;
-  companyPhone: string;
-  companyEmail: string;
-  receiptNumber: string;
-  datePaid: string;
-  paymentMethod: string;
-  amount: string;
-};
-
 type PDFProps = {
-  data: TemplateData;
+  file: any;
 };
 
 const styles = StyleSheet.create({
@@ -63,35 +54,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "flex-end",
   },
+  image: {
+    width: 550,
+  },
 });
 
-const PDF: React.FC<PDFProps> = ({ data }) => {
+const PDF: React.FC<PDFProps> = ({ file }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <View style={styles.columnParent}>
             <View style={styles.columnStart}>
-              <Text style={styles.heading}>{data.companyName}</Text>
-              <Text style={styles.paragraph}>{data.companyPhone}</Text>
-              <Text style={styles.paragraph}>{data.companyEmail}</Text>
-            </View>
-            <View style={styles.columnEnd}>
-              <Text style={styles.heading}>Receipt</Text>
-              <Text style={styles.paragraph}>
-                Receipt number: {data.receiptNumber}
-              </Text>
-              <Text style={styles.paragraph}>Date paid: {data.datePaid}</Text>
-              <Text style={styles.paragraph}>
-                Payment method: {data.paymentMethod}
-              </Text>
+              <Image style={styles.image} src={file.data}></Image>
             </View>
           </View>
           <View style={styles.divider}></View>
           <View>
-            <Text
-              style={styles.statement}
-            >{`${data.amount} paid on ${data.datePaid}`}</Text>
+            <Text style={styles.statement}></Text>
             <Text style={styles.paragraph}>Thank you for your business!</Text>
           </View>
         </View>
@@ -100,6 +80,6 @@ const PDF: React.FC<PDFProps> = ({ data }) => {
   );
 };
 
-export default async (data: TemplateData) => {
-  return await ReactPDF.renderToStream(<PDF {...{ data }} />);
+export default async (file: any) => {
+  return await ReactPDF.renderToStream(<PDF {...{ file }} />);
 };
