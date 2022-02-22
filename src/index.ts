@@ -1,5 +1,6 @@
 import express from "express";
-import template from "./template";
+import pdfTemplate from "./pdf-template";
+import pptxTemplate from "./pptx-template";
 import cors from "cors";
 import axios from "axios";
 
@@ -17,12 +18,18 @@ app.post("/report", async (req, res) => {
   });
   const image = await localAxiosInstance.post("/screenshot", req.body);
 
-  const result = await template(image);
+  if (req.body.type === "pdf") {
+    const result = await pdfTemplate(image);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename=export.pdf`);
 
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `attachment; filename=export.pdf`);
-
-  result.pipe(res);
+    result.pipe(res);
+  } else if (req.body.type === "ppt") {
+    const result = await pptxTemplate(image);
+    res.send(result);
+  } else {
+    res.send(image.data);
+  }
 });
 
 app.listen(port, () => {

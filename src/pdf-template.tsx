@@ -1,7 +1,6 @@
 import React from "react";
 import ReactPDF, {
   Page,
-  Text,
   View,
   Document,
   StyleSheet,
@@ -68,11 +67,6 @@ const PDF: React.FC<PDFProps> = ({ file }) => {
             <View style={styles.columnStart}>
               <Image style={styles.image} src={file.data}></Image>
             </View>
-          </View>
-          <View style={styles.divider}></View>
-          <View>
-            <Text style={styles.statement}></Text>
-            <Text style={styles.paragraph}>Thank you for your business!</Text>
           </View>
         </View>
       </Page>
