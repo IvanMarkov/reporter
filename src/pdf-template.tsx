@@ -8,12 +8,12 @@ import ReactPDF, {
 } from "@react-pdf/renderer";
 
 type PDFProps = {
-  file: any;
+  files: any;
 };
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#ffffff",
   },
   section: {
     margin: 10,
@@ -30,12 +30,6 @@ const styles = StyleSheet.create({
     color: "#131925",
     lineHeight: 1.4,
     marginBottom: 4,
-  },
-  divider: {
-    width: "100%",
-    height: 1,
-    backgroundColor: "#999999",
-    margin: "24px 0 24px 0",
   },
   paragraph: {
     fontSize: 12,
@@ -58,22 +52,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const PDF: React.FC<PDFProps> = ({ file }) => {
+const PDF: React.FC<PDFProps> = ({ files }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <View style={styles.columnParent}>
-            <View style={styles.columnStart}>
-              <Image style={styles.image} src={file.data}></Image>
+          {files.map((file, index) => (
+            <View style={styles.columnParent}>
+              <View key={index} style={styles.columnStart}>
+                <Image style={styles.image} src={file.data}></Image>
+              </View>
             </View>
-          </View>
+          ))}
         </View>
       </Page>
     </Document>
   );
 };
 
-export default async (file: any) => {
-  return await ReactPDF.renderToStream(<PDF {...{ file }} />);
+export default async (files: any[]) => {
+  return await ReactPDF.renderToStream(<PDF {...{ files }} />);
 };
