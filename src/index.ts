@@ -3,18 +3,21 @@ import pdfTemplate from "./pdf-template";
 import pptxTemplate from "./pptx-template";
 import cors from "cors";
 import axios from "axios";
+import dotenv from "dotenv";
 import { Data } from "./types";
 
+dotenv.config();
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(cors());
 app.options("*", cors());
-const port = 3002;
+const port = process.env.PORT;
+const screenshotterUrl = process.env.SCREENSHOTTER_URL;
 
 app.post("/report", async (req, res) => {
   const data = req.body as Data;
   const localAxiosInstance = axios.create({
-    baseURL: "http://localhost:3001",
+    baseURL: screenshotterUrl,
     timeout: 180000,
     responseType: "blob",
   });

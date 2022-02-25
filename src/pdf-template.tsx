@@ -41,14 +41,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   columnStart: {
-    flex: 1,
-  },
-  columnEnd: {
-    flex: 1,
-    alignItems: "flex-end",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
   image: {
-    width: 550,
+    width: 470,
   },
 });
 
