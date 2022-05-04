@@ -24,4 +24,11 @@ export type Data = {
   legend: any;
   chart: any;
   type: string;
+  multiple_view: boolean;
+  is_dashboard: boolean;
+  is_feedback: boolean;
+  is_keywords: boolean;
+  is_network: boolean;
+
+  data_contexts: any[];
 };

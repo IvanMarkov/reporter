@@ -23,12 +23,11 @@ app.post("/report", async (req, res) => {
   });
   const images = [];
 
-  if (!data.chart) {
+  if (data.multiple_view) {
     for (var i = 0; i < data.comparative_context.comparativePanelsNumber; i++) {
       const image = await localAxiosInstance.post("/screenshot", {
         ...data,
-        legend: data.dashboard_context.legends.value[i],
-        chart: data.dashboard_context.charts.value[i],
+        data_context: data.data_contexts[i],
         filter_context: { ...data.filter_context, comparativeIndex: i },
       });
       images.push(image);
